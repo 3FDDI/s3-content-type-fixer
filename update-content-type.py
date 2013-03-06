@@ -26,7 +26,6 @@ def update_content_type(access_key, secret_key, bucket_name, set_extensions=Fals
   for k in keyList:
     # work around for the fact that list() doesn't return metadata
     key = bucket.lookup(k.name)
-    #contentType = mimetypes.guess_type(key.name)
     temp_file = tempfile.NamedTemporaryFile()
     key.get_contents_to_file(temp_file)
     contentType = magic.from_file(temp_file.name, mime=True)
