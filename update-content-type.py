@@ -60,15 +60,21 @@ def update_content_type(access_key, secret_key, bucket_name, set_extensions=Fals
 
 def main():
   try:
-    args = sys.argv[1:]
-    if args[3]=='--set-extensions':
-      update_content_type(args[0], args[1], args[2], set_extensions = True)
+    if 'python' in sys.argv[0]:
+      args = sys.argv[2:]
+    else:
+      args = sys.argv[1:]
+    print args
+    if len(args) == 4:
+      if args[3]=='--set-extensions':
+        update_content_type(args[0], args[1], args[2], set_extensions = True)
+      else:
+        raise Exception('IndexError')
+        sys.exit(1)
     elif args[2]:
       update_content_type(args[0], args[1], args[2])
     else:
-      print 'Usage: update-content-type.py <s3 access key> <s3 secret key> <bucket name> [--set-extensions]'
-      print ' --set-extensions - optional argument which will also rename files with the appropriate'
-      print '   extension based on MIME type.'
+      raise Exception('IndexError')
       sys.exit(1)
   except IndexError:
     print 'Usage: update-content-type.py <s3 access key> <s3 secret key> <bucket name> [--set-extensions]'
